@@ -3,6 +3,7 @@ package com.example.travelmantics;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,18 +14,21 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class InsertActivity extends AppCompatActivity {
+import java.io.Serializable;
+
+public class DealActivity extends AppCompatActivity {
 
     private EditText etTitle;
     private EditText etPrice;
     private EditText etDescription;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    TravelDeal mDeal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insert);
+        setContentView(R.layout.activity_deal);
 
         etTitle = findViewById(R.id.et_title);
         etPrice = findViewById(R.id.et_price);
@@ -34,6 +38,15 @@ public class InsertActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
+        Intent intent = getIntent();
+        TravelDeal deal = (TravelDeal) intent.getSerializableExtra("deal");
+        if (deal == null) {
+            deal = new TravelDeal();
+        }
+        mDeal = deal;
+        etTitle.setText(mDeal.getTitle());
+        etDescription.setText(mDeal.getDescription());
+        etPrice.setText(mDeal.getPrice());
     }
 
     @Override
