@@ -24,8 +24,9 @@ public class FirebaseUtil {
     public static void openReference(){
         if (firebaseUtil == null) {
             mFirebaseDatabase = FirebaseDatabase.getInstance();
-            mDeals = new ArrayList<TravelDeal>();
+
         }
+        mDeals = new ArrayList<TravelDeal>();
         mDatabaseReference = mFirebaseDatabase.getReference().child(CHILD_NAME);
     }
 }

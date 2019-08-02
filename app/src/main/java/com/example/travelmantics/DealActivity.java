@@ -63,9 +63,17 @@ public class DealActivity extends AppCompatActivity {
             case R.id.action_save:
                 saveDeal();
                 Toast.makeText(this,"Deal Saved",Toast.LENGTH_LONG).show();
-                cleanAll();
+                backToList();
+                return true;
+            case R.id.action_delete:
+                deleteDeal();
+                backToList();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
-        return super.onOptionsItemSelected(item);
+
     }
 
     private void cleanAll() {
@@ -76,11 +84,29 @@ public class DealActivity extends AppCompatActivity {
     }
 
     private void saveDeal() {
-        String title = etTitle.getText().toString();
-        String price = etPrice.getText().toString();
-        String description = etDescription.getText().toString();
+        mDeal.setTitle(etTitle.getText().toString());
+        mDeal.setPrice(etPrice.getText().toString());
+        mDeal.setDescription(etDescription.getText().toString());
 
-        TravelDeal deal = new TravelDeal(title,price,description,"");
-        mDatabaseReference.push().setValue(deal);
+        if (mDeal.getId() == null){
+            mDatabaseReference.push().setValue(mDeal);
+        } else {
+            mDatabaseReference.child(mDeal.getId()).setValue(mDeal);
+        }
+    }
+
+    private void deleteDeal(){
+        if (mDeal.getId() == null){
+            Toast.makeText(this,"empty deal, can not delete",Toast.LENGTH_LONG).show();
+            return ;
+        }
+        mDatabaseReference.child(mDeal.getId()).removeValue();
+        Toast.makeText(this,"Deal deleted",Toast.LENGTH_LONG).show();
+    }
+
+    private void backToList(){
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
+
     }
 }
