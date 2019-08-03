@@ -9,11 +9,22 @@ public class TravelDeal implements Serializable {
     private String mDescription;
     private String mImageUrl;
 
-    public TravelDeal(String title, String price, String description, String imageUrl) {
+    public String getImageName() {
+        return mImageName;
+    }
+
+    public void setImageName(String imageName) {
+        mImageName = imageName;
+    }
+
+    private String mImageName;
+
+    public TravelDeal(String title, String price, String description, String imageUrl, String imageName) {
         mTitle = title;
         mPrice = price;
         mDescription = description;
         mImageUrl = imageUrl;
+        mImageName = imageName;
     }
 
     public TravelDeal(){}

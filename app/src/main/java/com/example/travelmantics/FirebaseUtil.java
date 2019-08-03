@@ -14,6 +14,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +34,8 @@ public class FirebaseUtil {
     private static ListActivity caller;
     private static int RC_SIGN_IN = 0;
     public static Boolean isAdmin = false;
+    public static FirebaseStorage mStorage;
+    public static StorageReference mStorageReference;
 
     public static void openReference(final ListActivity callerActivity){
         if (firebaseUtil == null) {
@@ -51,10 +55,12 @@ public class FirebaseUtil {
                     Toast.makeText(caller.getBaseContext(),"welcome back",Toast.LENGTH_LONG).show();
                 }
             };
+            connectStorage();
         }
 
         mDeals = new ArrayList<TravelDeal>();
         mDatabaseReference = mFirebaseDatabase.getReference().child(CHILD_NAME);
+
     }
 
     private static void checkAdmin(String uid) {
@@ -112,5 +118,10 @@ public class FirebaseUtil {
     public static void deattachListener()
     {
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+    private static void connectStorage(){
+        mStorage = FirebaseStorage.getInstance();
+        mStorageReference = mStorage.getReference().child("deals-images");
     }
 }
