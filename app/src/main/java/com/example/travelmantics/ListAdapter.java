@@ -1,5 +1,7 @@
 package com.example.travelmantics;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +28,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ChildEventListener mChildEventListener;
 
     public ListAdapter() {
-        FirebaseUtil.openReference();
+        //FirebaseUtil.openReference(activity);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
         mDeals = FirebaseUtil.mDeals;

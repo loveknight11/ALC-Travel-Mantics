@@ -34,7 +34,6 @@ public class DealActivity extends AppCompatActivity {
         etPrice = findViewById(R.id.et_price);
         etDescription = findViewById(R.id.et_description);
 
-        FirebaseUtil.openReference();
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
@@ -53,7 +52,23 @@ public class DealActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.insert_menu,menu);
+
+        if (FirebaseUtil.isAdmin){
+            menu.findItem(R.id.action_delete).setVisible(true);
+            menu.findItem(R.id.action_save).setVisible(true);
+            enableEditTexts(true);
+        } else {
+            menu.findItem(R.id.action_delete).setVisible(false);
+            menu.findItem(R.id.action_save).setVisible(false);
+            enableEditTexts(false);
+        }
         return true;
+    }
+
+    private void enableEditTexts(boolean isEnabled) {
+        etPrice.setEnabled(isEnabled);
+        etDescription.setEnabled(isEnabled);
+        etTitle.setEnabled(isEnabled);
     }
 
 
